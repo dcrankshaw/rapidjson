@@ -185,3 +185,10 @@ INSTALL(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
     DESTINATION "${CMAKE_INSTALL_DIR}"
     COMPONENT dev)
+
+add_library(rapidjson INTERFACE)
+target_include_directories(rapidjson INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
+export(TARGETS rapidjson FILE RapidJsonConfig.cmake)
