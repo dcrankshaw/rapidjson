@@ -398,8 +398,14 @@ RAPIDJSON_NAMESPACE_END
           \ref RAPIDJSON_ERRORS APIs.
 */
 #ifndef RAPIDJSON_ASSERT
-#include <cassert>
-#define RAPIDJSON_ASSERT(x) assert(x)
+// #include <cassert>
+// #define RAPIDJSON_ASSERT(x) assert(x)
+#include <stdexcept>
+class rapidjson_exception : public std::runtime_error {
+ public:
+  rapidjson_exception() : std::runtime_error("json schema invalid") {}
+};
+#define RAPIDJSON_ASSERT(x) { if(x); else throw rapidjson_exception(); }
 #endif // RAPIDJSON_ASSERT
 
 ///////////////////////////////////////////////////////////////////////////////
