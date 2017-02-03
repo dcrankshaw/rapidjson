@@ -15,6 +15,14 @@
 #ifndef RAPIDJSON_RAPIDJSON_H_
 #define RAPIDJSON_RAPIDJSON_H_
 
+#ifdef __clang__
+#   ifdef __ICC // icpc defines the __clang__ macro
+#   else // __ICC
+#       pragma clang diagnostic ignored "-Wc++98-compat"
+#       pragma clang diagnostic ignored "-Wc++98-compat-pedantic"
+#    endif
+#endif
+
 /*!\file rapidjson.h
     \brief common definitions and configuration
     
@@ -401,10 +409,17 @@ RAPIDJSON_NAMESPACE_END
 // #include <cassert>
 // #define RAPIDJSON_ASSERT(x) assert(x)
 #include <stdexcept>
+#include <cassert>
 class rapidjson_exception : public std::runtime_error {
  public:
   rapidjson_exception() : std::runtime_error("json schema invalid") {}
+  char const * what() const _NOEXCEPT;
 };
+
+char const * rapidjson_exception::what() const _NOEXCEPT {
+  return "json schema invalid";
+}
+
 #define RAPIDJSON_ASSERT(x) { if(x); else throw rapidjson_exception(); }
 #endif // RAPIDJSON_ASSERT
 
