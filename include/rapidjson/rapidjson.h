@@ -413,10 +413,10 @@ RAPIDJSON_NAMESPACE_END
 class rapidjson_exception : public std::runtime_error {
  public:
   rapidjson_exception() : std::runtime_error("json schema invalid") {}
-  char const * what() const _NOEXCEPT;
+  char const * what() const noexcept;
 };
 
-char const * rapidjson_exception::what() const _NOEXCEPT {
+char const * rapidjson_exception::what() const noexcept {
   return "json schema invalid";
 }
 
